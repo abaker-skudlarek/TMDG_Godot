@@ -75,7 +75,7 @@ size = Vector3(2, 2, 2)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ht6k3"]
 data = PackedVector3Array(-1, 1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, -1, 1, -1, -1, 1, -1, 1, -1, 1, -1, -1, 1, 1, -1, -1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, -1)
 
-[node name="LevelTest" type="Node3D" node_paths=PackedStringArray("cameras")]
+[node name="LevelTest" type="Node3D" node_paths=PackedStringArray("cameras") groups=["level"]]
 script = ExtResource("1_pwlpu")
 cameras = [NodePath("RedCamera"), NodePath("PurpleCamera"), NodePath("GreenCamera"), NodePath("OrangeCamera")]
 
