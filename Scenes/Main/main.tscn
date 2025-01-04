@@ -1,12 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bunk2xwjarnn8"]
+[gd_scene load_steps=3 format=3 uid="uid://bunk2xwjarnn8"]
 
 [ext_resource type="PackedScene" uid="uid://cils1t7noq8op" path="res://Scenes/Levels/LevelTest/level_test.tscn" id="1_h0gl4"]
 [ext_resource type="Script" path="res://Scenes/Main/main.gd" id="1_p44f0"]
-[ext_resource type="PackedScene" uid="uid://dbseiv02ddm5f" path="res://Scenes/Agent/agent.tscn" id="2_eh2x6"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_p44f0")
-
-[node name="Agent" parent="." instance=ExtResource("2_eh2x6")]
 
 [node name="LevelTest" parent="." instance=ExtResource("1_h0gl4")]

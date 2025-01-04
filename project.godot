@@ -31,10 +31,6 @@ folder_colors={
 "res://Scenes/": "orange"
 }
 
-[global_group]
-
-level=""
-
 [input]
 
 previous_camera={
