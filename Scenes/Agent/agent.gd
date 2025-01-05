@@ -6,7 +6,7 @@ var current_camera_index: int = 0
 
 
 func _ready() -> void:
-	SignalBus.connect("broadcast_camera_spawn_points", _on_broadcast_camera_spawn_points)	
+	SignalBus.connect("level_loaded", _on_level_loaded)	
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -16,9 +16,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		switch_to_previous_camera()	
 
 
-## When this signal is received, the Level is loaded and is ready for the Agent to spawn in their Cameras at the received spawn points
-func _on_broadcast_camera_spawn_points(spawn_points: Array) -> void:
-	spawn_cameras(spawn_points)
+func _on_level_loaded(camera_spawn_points: Array) -> void:
+	spawn_cameras(camera_spawn_points)
 
 
 func spawn_cameras(spawn_points: Array) -> void:
@@ -33,14 +32,18 @@ func spawn_cameras(spawn_points: Array) -> void:
 
 
 func switch_to_next_camera() -> void:
+	if cameras.size() == 0: return
 	current_camera_index += 1
 	if current_camera_index >= cameras.size():
 		current_camera_index = 0
 	cameras[current_camera_index].camera.current = true
+	print(current_camera_index)
 
 
 func switch_to_previous_camera() -> void:
-	current_camera_index += 1
-	if current_camera_index >= cameras.size():
-		current_camera_index = 0
+	if cameras.size() == 0: return
+	current_camera_index -= 1
+	if current_camera_index < 0:
+		current_camera_index = cameras.size() - 1
 	cameras[current_camera_index].camera.current = true
+	print(current_camera_index)

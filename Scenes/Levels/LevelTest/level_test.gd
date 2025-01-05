@@ -4,14 +4,15 @@ extends Node3D
 
 
 func _ready() -> void:
-    broadcast_camera_spawn_points()
+    var camera_spawn_points: Array = _get_camera_spawn_points()
+    SignalBus.emit_signal("level_loaded", camera_spawn_points)
 
 
-func broadcast_camera_spawn_points() -> void:
+func _get_camera_spawn_points() -> Array:
     var spawn_points := []
     for spawn_point: Node3D in $CameraSpawnPoints.get_children():
         spawn_points.append({
             "position": spawn_point.position,
             "rotation": spawn_point.rotation
         })
-    SignalBus.emit_signal("broadcast_camera_spawn_points", spawn_points)
+    return spawn_points

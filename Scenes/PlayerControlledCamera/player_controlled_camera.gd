@@ -1,9 +1,9 @@
 extends Node3D
 class_name PlayerControlledCamera
 
-const MOUSE_SENS: float = 0.001
-const X_LOWER_CLAMP: int = -30
-const X_UPPER_CLAMP: int = 10
+const MOUSE_SENS: float = 0.0005
+const X_LOWER_CLAMP: int = -20
+const X_UPPER_CLAMP: int = 0
 const Y_LOWER_CLAMP: int = -45
 const Y_UPPER_CLAMP: int = 45
 
@@ -18,7 +18,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		if event is InputEventMouseMotion:
+		if event is InputEventMouseMotion and camera.current:
 			# Rotate
 			rotation_point.rotate_y(-event.relative.x * MOUSE_SENS)
 			camera.rotate_x(-event.relative.y * MOUSE_SENS)

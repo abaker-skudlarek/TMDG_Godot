@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cils1t7noq8op"]
+[gd_scene load_steps=27 format=3 uid="uid://cils1t7noq8op"]
 
 [ext_resource type="Script" path="res://Scenes/Levels/LevelTest/level_test.gd" id="1_5h001"]
 [ext_resource type="Texture2D" uid="uid://bw5jqjbt6swqr" path="res://Assets/Textures/PrototypeTextures/Dark/texture_09.png" id="1_icb46"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://cyqmas4s8qdx0" path="res://Assets/Textures/PrototypeTextures/Green/texture_01.png" id="4_er5rt"]
 [ext_resource type="Texture2D" uid="uid://cjtgen4yucchb" path="res://Assets/Textures/PrototypeTextures/Red/texture_01.png" id="5_mc4yt"]
 [ext_resource type="Texture2D" uid="uid://dh84rr4bs2yc5" path="res://Assets/Textures/PrototypeTextures/Light/texture_12.png" id="6_6pwcr"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_e0mu7"]
+viewport_path = NodePath("SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8dc84"]
 albedo_texture = ExtResource("1_icb46")
@@ -77,6 +80,18 @@ data = PackedVector3Array(-1, 1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -
 [node name="LevelTest" type="Node3D"]
 script = ExtResource("1_5h001")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("ViewportTexture_e0mu7")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(-0.543306, 0, 0.839535, 0, 1, 0, -0.839535, 0, -0.543306, 3, 4.35873, 5)
+
 [node name="Environment" type="Node3D" parent="."]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
@@ -142,13 +157,13 @@ shape = SubResource("ConcavePolygonShape3D_ht6k3")
 [node name="CameraSpawnPoints" type="Node" parent="."]
 
 [node name="RedCameraSpawnPoint" type="Marker3D" parent="CameraSpawnPoints"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -7.4, 4, 0)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -7.2, 4, 0)
 
 [node name="PurpleCameraSpawnPoint" type="Marker3D" parent="CameraSpawnPoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 7.4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 7.2)
 
 [node name="GreenCameraSpawnPoint" type="Marker3D" parent="CameraSpawnPoints"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 7.4, 4, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 7.2, 4, 0)
 
 [node name="OrangeCameraSpawnPoint" type="Marker3D" parent="CameraSpawnPoints"]
-transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, 4, -7.4)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 4, -7.2)

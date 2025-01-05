@@ -2,4 +2,4 @@ extends Node
 
 
 # Level
-signal broadcast_camera_spawn_points(spawn_points: Array)
+signal level_loaded(camera_spawn_points: Array)
