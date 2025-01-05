@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://d2r67lq8bv561"]
-
-[node name="CameraSpawnPoint" type="Marker3D"]
-
-[node name="SpawnDirectionPoint" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)

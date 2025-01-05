@@ -15,8 +15,13 @@ run/main_scene="res://Scenes/Main/main.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SignalBus="*res://Resources/signal_bus.gd"
+
 [debug]
 
+gdscript/warnings/unused_signal=0
 gdscript/warnings/untyped_declaration=2
 
 [display]
@@ -28,6 +33,7 @@ window/size/viewport_height=1080
 
 folder_colors={
 "res://Assets/": "red",
+"res://Resources/": "green",
 "res://Scenes/": "orange"
 }
 

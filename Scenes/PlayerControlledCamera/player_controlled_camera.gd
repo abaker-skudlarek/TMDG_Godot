@@ -1,4 +1,5 @@
 extends Node3D
+class_name PlayerControlledCamera
 
 const MOUSE_SENS: float = 0.001
 const X_LOWER_CLAMP: int = -30
