@@ -1,12 +1,24 @@
-[gd_scene load_steps=8 format=3 uid="uid://berq6fut4beji"]
+[gd_scene load_steps=12 format=3 uid="uid://berq6fut4beji"]
 
 [ext_resource type="Script" path="res://Scenes/Agent/agent.gd" id="1_ui8ny"]
 [ext_resource type="PackedScene" uid="uid://b3tn3dhp7dwvl" path="res://Scenes/PlayerControlledCamera/player_controlled_camera.tscn" id="2_kywlq"]
+[ext_resource type="Texture2D" uid="uid://1i353m88qk1d" path="res://Assets/Textures/PrototypeTextures/Purple/texture_01.png" id="3_ennv5"]
 [ext_resource type="Texture2D" uid="uid://drqxbaxyoly55" path="res://Assets/Textures/PrototypeTextures/Dark/texture_01.png" id="3_hcuhj"]
+[ext_resource type="Texture2D" uid="uid://bqngi8s10dn1u" path="res://Assets/Textures/PrototypeTextures/Orange/texture_01.png" id="4_qt7t2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0iebk"]
+albedo_texture = ExtResource("3_ennv5")
+uv1_triplanar = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_j2ql5"]
+material = SubResource("StandardMaterial3D_0iebk")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_51ve0"]
+albedo_texture = ExtResource("4_qt7t2")
+uv1_triplanar = true
 
 [sub_resource type="PrismMesh" id="PrismMesh_ldh2o"]
+material = SubResource("StandardMaterial3D_51ve0")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rrlqu"]
 albedo_texture = ExtResource("3_hcuhj")
@@ -16,63 +28,37 @@ uv1_triplanar = true
 
 [node name="Agent" type="Node3D"]
 script = ExtResource("1_ui8ny")
-player_controlled_camera_scene = ExtResource("2_kywlq")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 4.77871, 0)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="Panel" type="Panel" parent="HUD"]
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 285.0
-offset_bottom = 285.0
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="HUD"]
+offset_right = 512.0
+offset_bottom = 512.0
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="HUD/Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -128.0
-offset_top = -128.0
-offset_right = 128.0
-offset_bottom = 128.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="SubViewport" type="SubViewport" parent="HUD/Panel/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="HUD/SubViewportContainer2"]
 handle_input_locally = false
-size = Vector2i(256, 256)
 render_target_update_mode = 4
 
-[node name="PlayerControlledCamera" parent="HUD/Panel/SubViewportContainer/SubViewport" instance=ExtResource("2_kywlq")]
-transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 1.09801, 3.0945)
+[node name="PlayerControlledCamera" parent="HUD/SubViewportContainer2/SubViewport" instance=ExtResource("2_kywlq")]
+transform = Transform3D(-1, 0, 8.74228e-08, 3.53265e-08, 0.91472, 0.404088, -7.99674e-08, 0.404088, -0.91472, 0, 1.45684, -3.82586)
 
-[node name="PanelContainer" type="PanelContainer" parent="HUD"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -290.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = 290.0
-grow_horizontal = 0
+[node name="SubViewportContainer" type="SubViewportContainer" parent="HUD"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -512.0
+offset_right = 512.0
+grow_vertical = 0
 
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="HUD/PanelContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="SubViewport2" type="SubViewport" parent="HUD/PanelContainer/SubViewportContainer2"]
+[node name="SubViewport" type="SubViewport" parent="HUD/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(256, 256)
 render_target_update_mode = 4
 
-[node name="PlayerControlledCamera" parent="HUD/PanelContainer/SubViewportContainer2/SubViewport2" instance=ExtResource("2_kywlq")]
-transform = Transform3D(-1, 0, 8.74228e-08, 2.51935e-08, 0.957576, 0.28818, -8.3714e-08, 0.28818, -0.957576, -0.00182724, 0.979644, -2.93071)
+[node name="PlayerControlledCamera" parent="HUD/SubViewportContainer/SubViewport" instance=ExtResource("2_kywlq")]
+transform = Transform3D(1, 0, 0, 0, 0.87051, 0.49215, 0, -0.49215, 0.87051, 0, 1.94834, 3.45486)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
