@@ -1,12 +1,26 @@
-[gd_scene load_steps=26 format=3 uid="uid://cils1t7noq8op"]
+[gd_scene load_steps=30 format=3 uid="uid://cils1t7noq8op"]
 
 [ext_resource type="Script" path="res://Scenes/Levels/LevelTest/level_test.gd" id="1_5h001"]
 [ext_resource type="Texture2D" uid="uid://bw5jqjbt6swqr" path="res://Assets/Textures/PrototypeTextures/Dark/texture_09.png" id="1_icb46"]
 [ext_resource type="Texture2D" uid="uid://bqngi8s10dn1u" path="res://Assets/Textures/PrototypeTextures/Orange/texture_01.png" id="2_qffyx"]
+[ext_resource type="Texture2D" uid="uid://doyodkg1ds7td" path="res://Assets/Textures/Sky.png" id="2_xnpvu"]
 [ext_resource type="Texture2D" uid="uid://1i353m88qk1d" path="res://Assets/Textures/PrototypeTextures/Purple/texture_01.png" id="3_e7cvp"]
 [ext_resource type="Texture2D" uid="uid://cyqmas4s8qdx0" path="res://Assets/Textures/PrototypeTextures/Green/texture_01.png" id="4_er5rt"]
 [ext_resource type="Texture2D" uid="uid://cjtgen4yucchb" path="res://Assets/Textures/PrototypeTextures/Red/texture_01.png" id="5_mc4yt"]
 [ext_resource type="Texture2D" uid="uid://dh84rr4bs2yc5" path="res://Assets/Textures/PrototypeTextures/Light/texture_12.png" id="6_6pwcr"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6fe8g"]
+panorama = ExtResource("2_xnpvu")
+
+[sub_resource type="Sky" id="Sky_4rt25"]
+sky_material = SubResource("PanoramaSkyMaterial_6fe8g")
+
+[sub_resource type="Environment" id="Environment_4n3tc"]
+background_mode = 2
+sky = SubResource("Sky_4rt25")
+tonemap_mode = 3
+glow_enabled = true
+fog_sky_affect = 0.108
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8dc84"]
 albedo_texture = ExtResource("1_icb46")
@@ -79,9 +93,16 @@ script = ExtResource("1_5h001")
 
 [node name="Environment" type="Node3D" parent="."]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_4n3tc")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, -0.328768, 0.944411, 0, -0.944411, -0.328768, 0, 10, -13)
+transform = Transform3D(-0.86605, -0.433032, 0.249882, 0.499958, -0.749655, 0.433659, -0.000463188, 0.500501, 0.865736, 0, 0, 0)
 shadow_enabled = true
+directional_shadow_split_1 = 0.07
+directional_shadow_split_2 = 0.12
+directional_shadow_split_3 = 0.2
+directional_shadow_blend_splits = true
 
 [node name="Floor" type="StaticBody3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
