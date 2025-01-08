@@ -1,12 +1,14 @@
 extends Node3D
+class_name Agent
 
 @export var player_controlled_camera_scene: PackedScene
+
 var cameras: Array = []
 var current_camera_index: int = 0
 
 
 func _ready() -> void:
-	SignalBus.connect("broadcast_camera_spawn_points", _on_broadcast_camera_spawn_points)	
+	spawn_cameras(Globals.camera_spawn_points)
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -14,11 +16,6 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		switch_to_next_camera()
 	elif event.is_action_pressed("previous_camera"):
 		switch_to_previous_camera()	
-
-
-## When this signal is received, the Level is loaded and is ready for the Agent to spawn in their Cameras at the received spawn points
-func _on_broadcast_camera_spawn_points(spawn_points: Array) -> void:
-	spawn_cameras(spawn_points)
 
 
 func spawn_cameras(spawn_points: Array) -> void:

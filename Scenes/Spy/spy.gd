@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name Spy
 
 const LERP_VALUE : float = 0.15
 const ANIMATION_BLEND : float = 7.0
