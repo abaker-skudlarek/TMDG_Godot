@@ -8,7 +8,7 @@ var current_camera_index: int = 0
 
 
 func _ready() -> void:
-	spawn_cameras(Globals.camera_spawn_points)
+	SignalBus.connect("level_loaded", _on_level_loaded)
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -16,6 +16,10 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		switch_to_next_camera()
 	elif event.is_action_pressed("previous_camera"):
 		switch_to_previous_camera()	
+
+
+func _on_level_loaded(camera_spawn_points: Array) -> void:
+	spawn_cameras(camera_spawn_points)
 
 
 func spawn_cameras(spawn_points: Array) -> void:
