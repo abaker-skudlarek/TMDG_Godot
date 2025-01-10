@@ -16,7 +16,7 @@ func _ready() -> void:
 
 
 func _on_start_game_pressed() -> void:
-	pass # Replace with function body.
+	_start_game.rpc()
 
 
 func _on_join_game_pressed() -> void:
@@ -40,6 +40,8 @@ func _on_peer_disconnected(id: int) -> void:
 ## Called only from clients
 func _on_connected_to_server() -> void:
 	print("connected to server")
+	# Call this method only on the server (id = 1), it will call on the rest of the connected players later
+	send_player_information.rpc_id(1, %NameLineEdit.text, multiplayer.get_unique_id())
 
 
 ## Called only from clients
@@ -48,12 +50,18 @@ func _on_connection_failed() -> void:
 
 
 func _host_game() -> void:
+	# Create server
 	peer = ENetMultiplayerPeer.new()
 	var return_code: int = peer.create_server(PORT, MAX_PLAYERS)
 	assert(return_code == OK, "Cannot create server: return code: {%s}" % return_code)
+
+	# Set peer
 	peer.get_host().compress(COMPRESSION_ALGORITHM)
 	multiplayer.set_multiplayer_peer(peer)  # This allows us to use our own connection, as the server, making us a "host"
 	print("waiting for players to join...")
+
+	# Add host as a player
+	send_player_information(%NameLineEdit.text, multiplayer.get_unique_id())
 
 
 func _join_game() -> void:
@@ -61,3 +69,22 @@ func _join_game() -> void:
 	peer.create_client(ADDRESS, PORT)
 	peer.get_host().compress(COMPRESSION_ALGORITHM)
 	multiplayer.set_multiplayer_peer(peer)
+
+
+@rpc("any_peer", "call_local")  # This allows this function to be called on all peers (including local)
+func _start_game() -> void:
+	# TODO: temporary to get it working. this will need to be done by some sort of scene manager
+	var scene: Node = load("res://Scenes/Levels/LevelTest/level_test.tscn").instantiate()
+	get_tree().root.add_child(scene)
+	hide()
+
+
+@rpc("any_peer")
+func send_player_information(player_name: String, player_id: int) -> void:
+	PlayerManager.add_player_to_connected_players(player_name, player_id)
+
+	# If we are the server, call this method on every peer so they get the player information too
+	if multiplayer.is_server():
+		for key: int in PlayerManager.connected_players:
+			var player: Dictionary = PlayerManager.connected_players[key]
+			send_player_information.rpc(player.name, player.id)

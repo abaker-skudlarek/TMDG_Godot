@@ -37,6 +37,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	animate(delta)
 
+
 func animate(delta: float) -> void:
 	if is_on_floor():
 		animator.set("parameters/ground_air_transition/transition_request", "grounded")
