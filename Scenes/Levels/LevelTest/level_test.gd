@@ -5,7 +5,8 @@ extends Node3D
 
 func _ready() -> void:
     var camera_spawn_points: Array = _get_camera_spawn_points()
-    SignalBus.emit_signal("level_loaded", camera_spawn_points)
+    # TODO: The two spy spawn points are temporary while testing networking with two spy players
+    SignalBus.emit_signal("level_loaded", camera_spawn_points, [$SpySpawnPoint.position, $SpySpawnPoint2.position])
 
 
 func _get_camera_spawn_points() -> Array:
