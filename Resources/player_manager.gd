@@ -30,5 +30,6 @@ func spawn_players(spawn_points: Array) -> void:
 	for key: int in connected_players:
 		var player: Node3D = spy_scene.instantiate()
 		player.position = spawn_points[index]
+		player.name = str(connected_players[key].id)
 		get_tree().root.add_child(player)
 		index += 1
