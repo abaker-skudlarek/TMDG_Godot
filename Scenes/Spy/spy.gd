@@ -17,12 +17,12 @@ var speed : float
 
 
 func _ready() -> void:
-	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
+	%MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 
 
 func _physics_process(delta: float) -> void:
 	# If our athority doesn't match our unique ID, this isn't the player we want to control, so return
-	if $MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
+	if %MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
 		return
 
 	var move_direction : Vector3 = Vector3.ZERO
