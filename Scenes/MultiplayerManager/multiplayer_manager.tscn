@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://ddgp4s835ohy5"]
+[gd_scene load_steps=3 format=3 uid="uid://ddgp4s835ohy5"]
 
 [ext_resource type="Script" path="res://Scenes/MultiplayerManager/multiplayer_manager.gd" id="1_6i3uk"]
+[ext_resource type="PackedScene" uid="uid://cr2ersq7g6q6f" path="res://Scenes/Spy/spy.tscn" id="2_ncm07"]
 
 [node name="MultiplayerManager" type="Control"]
 layout_mode = 3
@@ -10,6 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6i3uk")
+spy_scene = ExtResource("2_ncm07")
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
@@ -35,18 +37,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 
-[node name="EnterNameDialog" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="VBoxContainer/EnterNameDialog"]
-layout_mode = 2
-text = "Name: "
-
-[node name="NameLineEdit" type="LineEdit" parent="VBoxContainer/EnterNameDialog"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-
 [node name="HostGame" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Host"
@@ -55,10 +45,5 @@ text = "Host"
 layout_mode = 2
 text = "Join"
 
-[node name="Start Game" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "Start Game"
-
 [connection signal="pressed" from="VBoxContainer/HostGame" to="." method="_on_host_game_pressed"]
 [connection signal="pressed" from="VBoxContainer/JoinGame" to="." method="_on_join_game_pressed"]
-[connection signal="pressed" from="VBoxContainer/Start Game" to="." method="_on_start_game_pressed"]

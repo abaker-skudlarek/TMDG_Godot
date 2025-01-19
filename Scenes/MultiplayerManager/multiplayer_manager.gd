@@ -1,90 +1,44 @@
 extends Control
 
-const PORT: int = 8910
-const ADDRESS: String = "127.0.0.1"
+const PORT: int = 9999 
+const ADDRESS: String = "localhost"
 const MAX_PLAYERS: int = 2
-const COMPRESSION_ALGORITHM := ENetConnection.COMPRESS_RANGE_CODER
 
-var peer: ENetMultiplayerPeer  # This will become the peer we set up when joining or hosting a game
+@export var spy_scene: PackedScene
 
-
-func _ready() -> void:
-	multiplayer.peer_connected.connect(_on_peer_connected)
-	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
-	multiplayer.connected_to_server.connect(_on_connected_to_server)
-	multiplayer.connection_failed.connect(_on_connection_failed)
-
-
-func _on_start_game_pressed() -> void:
-	_start_game.rpc()
+var enet_peer := ENetMultiplayerPeer.new()
 
 
 func _on_join_game_pressed() -> void:
-	_join_game()
+	join_game()
 
 
 func _on_host_game_pressed() -> void:
-	_host_game()
+	host_game()
 
 
-## Called on server and clients when someone connects
-func _on_peer_connected(id: int) -> void:
-	print("peer {%s} connected" % id)
-
-
-## Called on server and clients when someone disconnects
-func _on_peer_disconnected(id: int) -> void:
-	print("peer {%s} disconnected" % id)
-
-
-## Called only from clients
-func _on_connected_to_server() -> void:
-	print("connected to server")
-	# Call this method only on the server (id = 1), it will call on the rest of the connected players later
-	send_player_information.rpc_id(1, %NameLineEdit.text, multiplayer.get_unique_id())
-
-
-## Called only from clients
-func _on_connection_failed() -> void:
-	print("connection failed")
-
-
-func _host_game() -> void:
-	# Create server
-	peer = ENetMultiplayerPeer.new()
-	var return_code: int = peer.create_server(PORT, MAX_PLAYERS)
-	assert(return_code == OK, "Cannot create server: return code: {%s}" % return_code)
-
-	# Set peer
-	peer.get_host().compress(COMPRESSION_ALGORITHM)
-	multiplayer.set_multiplayer_peer(peer)  # This allows us to use our own connection, as the server, making us a "host"
-	print("waiting for players to join...")
-
-	# Add host as a player
-	send_player_information(%NameLineEdit.text, multiplayer.get_unique_id())
-
-
-func _join_game() -> void:
-	peer = ENetMultiplayerPeer.new()
-	peer.create_client(ADDRESS, PORT)
-	peer.get_host().compress(COMPRESSION_ALGORITHM)
-	multiplayer.set_multiplayer_peer(peer)
-
-
-@rpc("any_peer", "call_local")  # This allows this function to be called on all peers (including local)
-func _start_game() -> void:
-	# TODO: temporary to get it working. this will need to be done by some sort of scene manager
-	var scene: Node = load("res://Scenes/Levels/LevelTest/level_test.tscn").instantiate()
-	get_tree().root.add_child(scene)
+func host_game() -> void:
 	hide()
+	enet_peer.create_server(PORT)
+	multiplayer.multiplayer_peer = enet_peer
+	multiplayer.peer_connected.connect(spawn_player)
+	spawn_player(multiplayer.get_unique_id())
 
 
-@rpc("any_peer")
-func send_player_information(player_name: String, player_id: int) -> void:
-	PlayerManager.add_player_to_connected_players(player_name, player_id)
+# TODO: THIS ISN"T WORKING FOR SOME REASON IDK WHY THE CLIENT ISN"T SPAWNING
+# TODO: Might have to revert back to main and try this all again following the "Online Multiplayer FPS From Scratch" video
 
-	# If we are the server, call this method on every peer so they get the player information too
-	if multiplayer.is_server():
-		for key: int in PlayerManager.connected_players:
-			var player: Dictionary = PlayerManager.connected_players[key]
-			send_player_information.rpc(player.name, player.id)
+
+func join_game() -> void:
+	hide()
+	enet_peer.create_client(ADDRESS, PORT)
+	print("client created")
+	multiplayer.multiplayer_peer = enet_peer
+	print("enet peer set")
+
+
+func spawn_player(peer_id: int) -> void:
+	print_debug("id: {%s} spawning player" % multiplayer.get_unique_id())
+	var player: Node3D = spy_scene.instantiate()
+	player.name = str(peer_id)
+	get_tree().root.get_node("Main").add_child(player)

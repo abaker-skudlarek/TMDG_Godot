@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 SignalBus="*res://Resources/signal_bus.gd"
-PlayerManager="*res://Resources/player_manager.gd"
 
 [debug]
 

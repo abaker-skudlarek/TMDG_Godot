@@ -16,16 +16,14 @@ var speed : float
 @onready var animator : AnimationTree = $AnimationTree
 
 
-func _ready() -> void:
-	%MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
+func _enter_tree() -> void:
+	set_multiplayer_authority(str(name).to_int())
 
 
 func _physics_process(delta: float) -> void:
-	# If our athority doesn't match our unique ID, this isn't the player we want to control, so return
-	if %MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
-		return
+	if not is_multiplayer_authority(): return
 
-	var move_direction : Vector3 = Vector3.ZERO
+	var move_direction: Vector3 = Vector3.ZERO
 	move_direction.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	move_direction.z = Input.get_action_strength("move_backwards") - Input.get_action_strength("move_forwards")
 	move_direction = move_direction.rotated(Vector3.UP, spring_arm_pivot.rotation.y)

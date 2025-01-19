@@ -2,12 +2,15 @@
 
 [ext_resource type="PackedScene" uid="uid://cils1t7noq8op" path="res://Scenes/Levels/LevelTest/level_test.tscn" id="1_h0gl4"]
 [ext_resource type="Script" path="res://Scenes/Main/main.gd" id="1_p44f0"]
-[ext_resource type="PackedScene" uid="uid://cr2ersq7g6q6f" path="res://Scenes/Spy/spy.tscn" id="2_jspt7"]
+[ext_resource type="PackedScene" uid="uid://ddgp4s835ohy5" path="res://Scenes/MultiplayerManager/multiplayer_manager.tscn" id="2_1y0ff"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_p44f0")
 
-[node name="Spy" parent="." instance=ExtResource("2_jspt7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+[node name="MultiplayerManager" parent="." instance=ExtResource("2_1y0ff")]
 
 [node name="LevelTest" parent="." instance=ExtResource("1_h0gl4")]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/Spy/spy.tscn")
+spawn_path = NodePath("..")
